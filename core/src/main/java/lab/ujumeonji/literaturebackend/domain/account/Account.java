@@ -11,24 +11,27 @@ import org.hibernate.annotations.SQLRestriction;
 import org.jetbrains.annotations.NotNull;
 
 @Entity
-@Table(
-    name = "accounts",
-    indexes = {@Index(name = "idx_account_email", columnList = "email")})
+@Table(name = "accounts", indexes = { @Index(name = "idx_account_email", columnList = "email") })
 @SQLDelete(sql = "UPDATE accounts SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @SQLRestriction("deleted_at IS NULL")
 public class Account extends BaseEntity<UUID> {
 
   public static final String UNKNOWN = "알 수 없음";
 
-  @Id private UUID id;
+  @Id
+  private UUID id;
 
-  @Column private String email;
+  @Column
+  private String email;
 
-  @Column private String password;
+  @Column
+  private String password;
 
-  @Column private String name;
+  @Column
+  private String name;
 
-  protected Account() {}
+  protected Account() {
+  }
 
   Account(
       String email,
@@ -52,7 +55,8 @@ public class Account extends BaseEntity<UUID> {
     return new Account(email, hashedPassword, name, now, now, null);
   }
 
-  private void validate() {}
+  private void validate() {
+  }
 
   boolean checkPassword(String password, PasswordEncoder passwordEncoder) {
     return passwordEncoder.matches(password, this.password);
